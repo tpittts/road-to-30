@@ -63,7 +63,52 @@ function fillPlans(){let cur=planSel.value;planSel.innerHTML='<option value="">U
 function resetForm(){form.reset();editId.value="";date.value=new Date().toISOString().slice(0,10);env.value="Solo Outdoor"}function open(){resetForm();modal.classList.add("open")}function closeM(){modal.classList.remove("open")}
 function editRun(id){let r=state.runs.find(x=>x.id===id);if(!r)return;editId.value=r.id;date.value=r.date;planSel.value=r.planId||"";type.value=r.type;env.value=r.env;distance.value=r.distance;time.value=r.time||"";pace.value=r.pace||"";hr.value=r.hr||"";cadence.value=r.cadence||"";rpe.value=r.rpe||"";workPace.value=r.workPace||"";notes.value=r.notes||"";modal.classList.add("open")}window.editRun=editRun;
 form.addEventListener("submit",e=>{e.preventDefault();let id=editId.value||"r"+Date.now(),d=+distance.value||0,t=time.value.trim(),p=pace.value.trim();if(!p&&d&&t)p=fmtP(timeSec(t)/d);let obj={id,date:date.value,week:weekFromDate(date.value),type:type.value,env:env.value,planId:planSel.value||null,distance:d,time:t,pace:p,hr:+hr.value||null,cadence:+cadence.value||null,rpe:+rpe.value||null,workPace:workPace.value.trim(),notes:notes.value.trim()},ix=state.runs.findIndex(r=>r.id===id);if(ix>=0)state.runs[ix]=obj;else state.runs.push(obj);closeM();render()});
-document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===b.dataset.tab))});add.onclick=add2.onclick=open;close.onclick=cancel.onclick=closeM;backup.onclick=()=>{let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:"application/json"}));a.download="road-to-30-backup.json";a.click()};document.getElementById("restore").onclick=()=>document.getElementById("restoreFile").click();document.getElementById("restoreFile").onchange=e=>{let f=e.target.files[0];if(!f)return;let rd=new FileReader();rd.onload=()=>{try{let incoming=JSON.parse(rd.result);if(!incoming||!Array.isArray(incoming.runs))throw new Error("Invalid backup");state=incoming;save();render();alert("Road to 30 backup restored successfully.");}catch(err){alert("That file could not be restored as a Road to 30 backup.");}};rd.readAsText(f)};planSel.onchange=()=>{let p=gp(planSel.value);if(p)type.value=p.type};
 const daysEl=document.getElementById("days"),heroLong=document.getElementById("heroLong"),milesHero=document.getElementById("milesHero"),miles=document.getElementById("miles"),longestEl=document.getElementById("longest"),distPct=document.getElementById("distPct"),bestEl=document.getElementById("best"),count=document.getElementById("count"),weekMiles=document.getElementById("weekMiles"),club=document.getElementById("club"),prog=document.getElementById("prog"),xp=document.getElementById("xp"),coach=document.getElementById("coach"),next=document.getElementById("next"),trail=document.getElementById("trail"),badgesEl=document.getElementById("badges"),badgeCount=document.getElementById("badgeCount"),filters=document.getElementById("filters"),runList=document.getElementById("runList"),planWeeks=document.getElementById("planWeeks"),modal=document.getElementById("modal"),form=document.getElementById("form"),editId=document.getElementById("editId"),date=document.getElementById("date"),planSel=document.getElementById("planSel"),type=document.getElementById("type"),env=document.getElementById("env"),distance=document.getElementById("distance"),time=document.getElementById("time"),pace=document.getElementById("pace"),hr=document.getElementById("hr"),cadence=document.getElementById("cadence"),rpe=document.getElementById("rpe"),workPace=document.getElementById("workPace"),notes=document.getElementById("notes");
+const addBtn=document.getElementById("add"),addBtn2=document.getElementById("add2"),closeBtn=document.getElementById("close"),cancelBtn=document.getElementById("cancel"),backupBtn=document.getElementById("backup"),restoreBtn=document.getElementById("restore"),restoreFile=document.getElementById("restoreFile");
+
+document.querySelectorAll(".tab").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===btn));
+    document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===btn.dataset.tab));
+  });
+});
+
+if(addBtn)addBtn.addEventListener("click",open);
+if(addBtn2)addBtn2.addEventListener("click",open);
+if(closeBtn)closeBtn.addEventListener("click",closeM);
+if(cancelBtn)cancelBtn.addEventListener("click",closeM);
+if(modal)modal.addEventListener("click",e=>{if(e.target===modal)closeM()});
+
+if(backupBtn)backupBtn.addEventListener("click",()=>{
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:"application/json"}));
+  a.download="road-to-30-backup.json";
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+});
+
+if(restoreBtn&&restoreFile){
+  restoreBtn.addEventListener("click",()=>restoreFile.click());
+  restoreFile.addEventListener("change",e=>{
+    const file=e.target.files[0];
+    if(!file)return;
+    const rd=new FileReader();
+    rd.onload=()=>{
+      try{
+        const incoming=JSON.parse(rd.result);
+        if(!incoming||!Array.isArray(incoming.runs))throw new Error("Invalid backup");
+        state=incoming;
+        save();
+        render();
+        alert("Road to 30 backup restored successfully.");
+      }catch(err){
+        alert("That file could not be restored as a Road to 30 backup.");
+      }
+    };
+    rd.readAsText(file);
+  });
+}
+if(planSel)planSel.addEventListener("change",()=>{const p=gp(planSel.value);if(p)type.value=p.type});
+
 render();
 </script></body></html>
