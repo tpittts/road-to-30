@@ -4,50 +4,70 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Road to 30</title>
 <style>
-:root{--ink:#17212b;--muted:#667085;--paper:#f6f7fb;--card:#fff;--navy:#243447;--teal:#2a9d8f;--gold:#f4c95d;--line:#e5e9ef}
-*{box-sizing:border-box}body{margin:0;background:var(--paper);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink)}
-button,input,select,textarea{font:inherit}button{cursor:pointer}.shell{max-width:1180px;margin:auto;padding:20px}.top{display:flex;justify-content:space-between;gap:14px;align-items:center}.brand{display:flex;gap:10px;align-items:center}.logo{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--navy),#46617d);color:#fff;display:grid;place-items:center;font-size:22px}.brand h1{margin:0;font-size:22px}.sub,.small{font-size:11px;color:var(--muted)}.actions{display:flex;gap:7px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:#fff;padding:8px 11px;border-radius:10px;font-size:11px;font-weight:800}.btn.primary{background:var(--teal);color:#fff;border-color:var(--teal)}
-.tabs{display:flex;gap:5px;background:#e9edf2;padding:5px;border-radius:13px;width:max-content;margin:18px 0}.tab{border:0;background:transparent;padding:8px 12px;border-radius:9px;font-size:11px;font-weight:900;color:var(--muted)}.tab.active{background:#fff;color:var(--ink)}.view{display:none}.view.active{display:block}
-.hero{display:grid;grid-template-columns:1.6fr 1fr;gap:13px}.heroMain{background:linear-gradient(135deg,#203043,#314a63);color:#fff;border-radius:22px;padding:23px}.heroMain h2{font-size:38px;line-height:1;margin:6px 0 10px}.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.pill{background:rgba(255,255,255,.1);padding:8px 10px;border-radius:12px}.pill strong{display:block;font-size:17px}.pill span{font-size:9px;color:#d8e0e7}
-.card{background:#fff;border:1px solid #e8ecf1;border-radius:18px;padding:15px}.card h3{margin:0 0 4px}.big{font-size:30px;font-weight:950;margin:7px 0}.progress{height:10px;background:#edf0f4;border-radius:99px;overflow:hidden}.progress span{display:block;height:100%;background:var(--teal)}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:13px 0}.stat{background:#fff;border:1px solid #e8ecf1;border-radius:16px;padding:14px}.label{font-size:9px;text-transform:uppercase;color:var(--muted);font-weight:900}.value{font-size:24px;font-weight:950;margin:4px 0}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px}.callout{background:#eef9f6;border:1px solid #d8eee8;border-radius:14px;padding:13px;font-size:11px;line-height:1.45}
-.badges{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.badge{padding:11px;border:1px solid #e8ebef;border-radius:13px;text-align:center}.badge.locked{opacity:.4;filter:grayscale(1)}.bi{font-size:25px}.bn{font-size:10px;font-weight:900}.bd{font-size:8px;color:var(--muted)}
-.trail{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.trailItem{text-align:center;font-size:9px;color:var(--muted)}.trailDot{width:32px;height:32px;border-radius:50%;background:#e5e9ed;display:grid;place-items:center;margin:0 auto 4px;font-weight:900}.trailItem.done .trailDot{background:var(--teal);color:#fff}.trailItem.current .trailDot{background:var(--gold)}
+:root{--ink:#17212b;--muted:#667085;--paper:#f6f7fb;--card:#fff;--navy:#243447;--hero1:#203043;--hero2:#314a63;--accent:#2a9d8f;--gold:#f4c95d;--line:#e5e9ef;--soft:#eef9f6;--softline:#d8eee8;--heroText:#d5dde5;--pattern:none}
+body[data-skin="holiday"]{--paper:#f7f3ec;--navy:#1f3d2b;--hero1:#173222;--hero2:#2f5a3f;--accent:#b23a48;--gold:#e9b949;--line:#ebe3d6;--soft:#fbf0ef;--softline:#f0d6d6;--heroText:#e7efe5;--pattern:radial-gradient(circle at 12% 20%,rgba(255,255,255,.12) 0 2px,transparent 3px),radial-gradient(circle at 78% 30%,rgba(255,255,255,.10) 0 2px,transparent 3px),radial-gradient(circle at 55% 80%,rgba(233,185,73,.25) 0 2px,transparent 3px)}
+body[data-skin="castle"]{--paper:#f6f3fb;--navy:#3b2a5c;--hero1:#2e2050;--hero2:#6a4c93;--accent:#a8508a;--gold:#e8c468;--line:#e7e1f0;--soft:#f7eff6;--softline:#ecd7e7;--heroText:#ece4f7;--pattern:radial-gradient(circle at 18% 25%,rgba(232,196,104,.35) 0 1.5px,transparent 2.5px),radial-gradient(circle at 70% 18%,rgba(255,255,255,.25) 0 1.5px,transparent 2.5px),radial-gradient(circle at 86% 70%,rgba(232,196,104,.3) 0 1.5px,transparent 2.5px),radial-gradient(circle at 40% 85%,rgba(255,255,255,.2) 0 1.5px,transparent 2.5px)}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);transition:background .3s}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.shell{max-width:1180px;margin:auto;padding:20px;position:relative;z-index:1}
+.top{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap}.brand{display:flex;gap:10px;align-items:center}.logo{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--hero1),var(--hero2));color:#fff;display:grid;place-items:center;font-size:22px}.brand h1{margin:0;font-size:22px}.sub,.small{font-size:11px;color:var(--muted)}
+.actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}.btn{border:1px solid var(--line);background:#fff;padding:8px 11px;border-radius:10px;font-size:11px;font-weight:800;color:var(--ink)}.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.skinSel{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 9px;font-size:11px;font-weight:800;width:auto;margin:0}
+.navrow{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:18px 0}
+.tabs{display:flex;gap:5px;background:rgba(0,0,0,.05);padding:5px;border-radius:13px;width:max-content}.tab,.seg{border:0;background:transparent;padding:8px 12px;border-radius:9px;font-size:11px;font-weight:900;color:var(--muted)}.tab.active,.seg.active{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.06)}.view{display:none}.view.active{display:block}
+.hero{display:grid;grid-template-columns:1.6fr 1fr;gap:13px}.heroMain{background:linear-gradient(135deg,var(--hero1),var(--hero2));color:#fff;border-radius:22px;padding:23px;position:relative;overflow:hidden}.heroMain::after{content:"";position:absolute;inset:0;background-image:var(--pattern);background-size:140px 140px;pointer-events:none}.heroMain>*{position:relative;z-index:1}.heroMain h2{font-size:38px;line-height:1;margin:6px 0 10px}.heroMain .sub,.heroMain .small{color:var(--heroText)}.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.pill{background:rgba(255,255,255,.12);padding:8px 10px;border-radius:12px}.pill strong{display:block;font-size:17px}.pill span{font-size:9px;color:var(--heroText)}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:15px}.card h3{margin:0 0 4px}.big{font-size:30px;font-weight:950;margin:7px 0}.progress{height:10px;background:#edf0f4;border-radius:99px;overflow:hidden}.progress span{display:block;height:100%;background:var(--accent);transition:width .4s}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:13px 0}.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}.label{font-size:9px;text-transform:uppercase;color:var(--muted);font-weight:900;letter-spacing:.03em}.value{font-size:24px;font-weight:950;margin:4px 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px}.callout{background:var(--soft);border:1px solid var(--softline);border-radius:14px;padding:13px;font-size:11px;line-height:1.5}
+.sectionHead{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.badges{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.badge{padding:11px;border:1px solid var(--line);border-radius:13px;text-align:center;background:#fff}.badge.locked{opacity:.45;filter:grayscale(1)}.bi{font-size:25px}.bn{font-size:10px;font-weight:900;margin-top:2px}.bd{font-size:8.5px;color:var(--muted);margin-top:2px;line-height:1.35}
+.chal{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.ch{border:1px solid var(--line);border-radius:13px;padding:10px;display:grid;grid-template-columns:34px 1fr;gap:8px;align-items:center;background:#fff}.ch .bi{font-size:24px;text-align:center}.ch.done{background:var(--soft);border-color:var(--softline)}.ch.todo .bi{filter:grayscale(.7);opacity:.75}.ch .progress{height:6px;margin-top:6px}.ch .pct{font-size:8.5px;color:var(--muted);margin-top:3px}
+.secrets{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.secret{border:1px dashed var(--line);border-radius:13px;padding:10px 6px;text-align:center;min-height:86px;display:flex;flex-direction:column;justify-content:center}.secret .bi{font-size:24px}.secret.found{border:1px solid var(--gold);background:linear-gradient(180deg,#fffaf0,#fff)}.secret.wrapped .bn{color:var(--muted)}
+.trail{display:grid;gap:7px}.trailItem{text-align:center;font-size:9px;color:var(--muted)}.trailDot{width:32px;height:32px;border-radius:50%;background:#e5e9ed;display:grid;place-items:center;margin:0 auto 4px;font-weight:900}.trailItem.done .trailDot{background:var(--accent);color:#fff}.trailItem.current .trailDot{background:var(--gold)}
 .filters{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.filter{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 9px;font-size:10px;font-weight:800}.filter.active{background:var(--ink);color:#fff}
-.runlist{display:grid;gap:8px}.runrow{display:grid;grid-template-columns:88px 1.5fr .7fr .7fr .6fr .5fr 62px;gap:8px;align-items:center;padding:11px;border:1px solid #edf0f3;border-radius:12px}.runrow.head{background:#f7f8fa;font-size:9px;color:var(--muted);font-weight:900;text-transform:uppercase}.runname{font-size:11px;font-weight:900}.meta{font-size:9px;color:var(--muted);margin-top:2px}.env{display:inline-block;padding:4px 6px;border-radius:99px;background:#f2f4f7;font-size:8px;font-weight:900;margin-top:4px}
-.planweeks{display:grid;gap:10px}.week{background:#fff;border:1px solid #e7ebef;border-radius:16px;padding:14px}.weektop{display:flex;justify-content:space-between}.weekruns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:9px}.planrun{border:1px solid #e9ecf0;border-radius:12px;padding:10px}.planrun.done{background:#f5fbf9;border-color:#cce8e1}.slot{font-size:8px;color:var(--muted);text-transform:uppercase;font-weight:900}.pn{font-size:11px;font-weight:900;margin:4px 0}.target,.actual{font-size:9px;color:var(--muted);line-height:1.4}.actual{margin-top:7px;padding-top:7px;border-top:1px dashed #dde3e8}
-.note{background:#fff8df;border:1px solid #f0e1a1;border-radius:14px;padding:12px;font-size:10px;line-height:1.45;margin-bottom:10px}
-.modal{position:fixed;inset:0;background:rgba(20,30,40,.5);display:none;align-items:center;justify-content:center;padding:18px}.modal.open{display:flex}.modalCard{background:#fff;width:min(720px,100%);max-height:92vh;overflow:auto;border-radius:18px;padding:16px}.form{display:grid;grid-template-columns:1fr 1fr;gap:9px}label{font-size:9px;font-weight:900;color:#4b5663}input,select,textarea{width:100%;padding:8px 9px;border:1px solid #dfe3e8;border-radius:8px;margin-top:4px}.full{grid-column:1/-1}textarea{min-height:75px}
-@media(max-width:850px){.hero,.two{grid-template-columns:1fr}.grid4{grid-template-columns:1fr 1fr}.badges{grid-template-columns:repeat(3,1fr)}.weekruns{grid-template-columns:1fr}.runrow{grid-template-columns:78px 1.3fr .7fr .7fr}.runrow>*:nth-child(5),.runrow>*:nth-child(6),.runrow>*:nth-child(7){display:none}}
-@media(max-width:560px){.shell{padding:12px}.grid4{grid-template-columns:1fr 1fr}.badges{grid-template-columns:repeat(2,1fr)}.form{grid-template-columns:1fr}.full{grid-column:auto}.runrow{grid-template-columns:68px 1fr .7fr}.runrow>*:nth-child(4){display:none}}
+.runlist{display:grid;gap:8px}.runrow{display:grid;grid-template-columns:88px 1.5fr .7fr .7fr .6fr .5fr 62px;gap:8px;align-items:center;padding:11px;border:1px solid var(--line);border-radius:12px;background:#fff}.runrow.head{background:rgba(0,0,0,.025);font-size:9px;color:var(--muted);font-weight:900;text-transform:uppercase}.runname{font-size:11px;font-weight:900}.meta{font-size:9px;color:var(--muted);margin-top:2px}.env{display:inline-block;padding:4px 6px;border-radius:99px;background:#f2f4f7;font-size:8px;font-weight:900;margin-top:4px;margin-right:3px}.env.fuel{background:#fff3d6}
+.planweeks{display:grid;gap:10px}.week{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}.week.now{border-color:var(--accent);box-shadow:0 0 0 2px var(--soft)}.weektop{display:flex;justify-content:space-between;gap:8px}.tag{display:inline-block;font-size:8px;font-weight:900;text-transform:uppercase;padding:3px 6px;border-radius:99px;background:var(--soft);color:var(--accent);margin-left:6px;vertical-align:middle}.weekruns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:9px}.planrun{border:1px solid var(--line);border-radius:12px;padding:10px}.planrun.done{background:var(--soft);border-color:var(--softline)}.slot{font-size:8px;color:var(--muted);text-transform:uppercase;font-weight:900}.pn{font-size:11px;font-weight:900;margin:4px 0}.target,.actual{font-size:9px;color:var(--muted);line-height:1.4}.actual{margin-top:7px;padding-top:7px;border-top:1px dashed var(--line)}
+.note{background:#fff8df;border:1px solid #f0e1a1;border-radius:14px;padding:12px;font-size:10.5px;line-height:1.5;margin-bottom:10px}.note ul{margin:6px 0 0;padding-left:16px}
+.modal{position:fixed;inset:0;background:rgba(20,30,40,.5);display:none;align-items:center;justify-content:center;padding:18px;z-index:20}.modal.open{display:flex}.modalCard{background:#fff;width:min(720px,100%);max-height:92vh;overflow:auto;border-radius:18px;padding:16px}.form{display:grid;grid-template-columns:1fr 1fr;gap:9px}label{font-size:9px;font-weight:900;color:#4b5663}input,select,textarea{width:100%;padding:8px 9px;border:1px solid #dfe3e8;border-radius:8px;margin-top:4px}.full{grid-column:1/-1}textarea{min-height:75px}.check{display:flex;gap:7px;align-items:center}.check input{width:auto;margin:0}
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,140%);background:var(--ink);color:#fff;padding:12px 16px;border-radius:14px;font-size:12px;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .35s,opacity .35s;z-index:30;max-width:92vw;text-align:center;opacity:0;visibility:hidden}.toast.show{transform:translate(-50%,0);opacity:1;visibility:visible}.toast b{color:var(--gold)}
+#snow{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;display:none}body[data-skin="holiday"] #snow.on{display:block}#snow i{position:absolute;top:-12px;color:#fff;text-shadow:0 0 2px rgba(31,61,43,.35);font-style:normal;animation:fall linear infinite;opacity:.85}
+@keyframes fall{to{transform:translateY(105vh) translateX(30px) rotate(200deg)}}
+@media (prefers-reduced-motion:reduce){#snow{display:none!important}.toast,.progress span{transition:none}}
+@media(max-width:850px){.hero,.two{grid-template-columns:1fr}.grid4{grid-template-columns:1fr 1fr}.badges{grid-template-columns:repeat(3,1fr)}.chal{grid-template-columns:1fr 1fr}.secrets{grid-template-columns:repeat(4,1fr)}.weekruns{grid-template-columns:1fr}.runrow{grid-template-columns:78px 1.3fr .7fr .7fr}.runrow>*:nth-child(5),.runrow>*:nth-child(6),.runrow>*:nth-child(7){display:none}}
+@media(max-width:560px){.shell{padding:12px}.heroMain h2{font-size:31px}.grid4{grid-template-columns:1fr 1fr}.badges{grid-template-columns:repeat(2,1fr)}.chal{grid-template-columns:1fr}.secrets{grid-template-columns:repeat(3,1fr)}.form{grid-template-columns:1fr}.full{grid-column:auto}.runrow{grid-template-columns:68px 1fr .7fr}.runrow>*:nth-child(4){display:none}.tabs{width:100%}.tab,.seg{flex:1}}
 </style></head>
-<body>
+<body data-skin="holiday">
+<div id="snow"></div>
 <div class="shell">
-<div class="top"><div class="brand"><div class="logo">🏃🏽‍♀️</div><div><h1>Road to 30</h1><div class="sub">Turkey Trot 5K • November 26, 2026</div></div></div><div class="actions"><button class="btn" id="backupBtn">Backup</button><button class="btn" id="restoreBtn">Restore Backup</button><input id="restoreFile" type="file" accept=".json,application/json" hidden><button class="btn primary" id="addRunBtn">+ Log a run</button></div></div>
-<div class="tabs"><button class="tab active" data-view="overview">Overview</button><button class="tab" data-view="runs">Run Log</button><button class="tab" data-view="plan">Plan</button></div>
-
-<section id="overview" class="view active">
-<div class="hero"><div class="heroMain"><div class="sub" style="color:#d5dde5">YOUR TURKEY TROT MISSION</div><h2>3.1 miles.<br>30:00.</h2><div class="small" style="color:#d5dde5">Build the engine first, then sharpen the pace. Smart training counts.</div><div class="pills"><div class="pill"><strong id="daysLeft">—</strong><span>days left</span></div><div class="pill"><strong>9:39</strong><span>goal pace</span></div><div class="pill"><strong id="heroLongest">—</strong><span>longest continuous</span></div></div></div>
-<div class="card"><div class="small">MILEAGE QUEST</div><h3>Next club: <span id="nextClub">—</span></h3><div class="big"><span id="heroMiles">0</span> mi</div><div class="progress"><span id="mileProgress" style="width:0%"></span></div><div class="small" id="levelText" style="margin-top:7px"></div></div></div>
-<div class="grid4"><div class="stat"><div class="label">Training miles</div><div class="value" id="totalMiles">—</div></div><div class="stat"><div class="label">Longest continuous</div><div class="value" id="longestRun">—</div></div><div class="stat"><div class="label">Best continuous pace</div><div class="value" id="bestPace">—</div></div><div class="stat"><div class="label">Runs logged</div><div class="value" id="runCount">—</div></div></div>
-<div class="two"><div class="card"><h3>Coach’s lens</h3><div class="callout" id="coachLens"></div></div><div class="card"><h3>Next key run</h3><div class="callout" id="nextRun"></div></div></div>
-<div class="two"><div class="card"><h3>Distance trail</h3><div class="trail" id="trail"></div></div><div class="card"><h3>Badge case</h3><div class="small" id="badgeCount"></div><div class="badges" id="badges" style="margin-top:8px"></div></div></div>
-</section>
-
-<section id="runs" class="view"><div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><div><h3>Run log</h3><div class="small">Completed runs only</div></div><button class="btn primary" id="addRunBtn2">+ Log a run</button></div><div class="filters" id="filters"></div><div class="runlist" id="runList"></div></div></section>
-
-<section id="plan" class="view"><div class="note"><b>Current adjustment:</b> Week 4 repeats the 4 × 3-minute interval workout. Target <b>10:35–10:45/mi</b> on the work reps with 2-minute easy recoveries. The Oct. 21 stroller run stays in the log as added-resistance context, not regression.</div><div class="planweeks" id="planWeeks"></div></section>
+<div class="top">
+  <div class="brand"><div class="logo" id="logo">🏃🏽‍♀️</div><div><h1 id="appTitle">Road to 30</h1><div class="sub" id="appSub"></div></div></div>
+  <div class="actions">
+    <select class="skinSel" id="skinSel" aria-label="Skin"><option value="holiday">🎄 Holiday skin</option><option value="castle">🏰 Castle skin</option><option value="classic">Classic skin</option></select>
+    <button class="btn" id="snowBtn" title="Toggle snowfall">❄️</button>
+    <button class="btn" id="backupBtn">Backup</button><button class="btn" id="restoreBtn">Restore Backup</button><input id="restoreFile" type="file" accept=".json,application/json" hidden>
+    <button class="btn primary" id="addRunBtn">+ Log a run</button>
+  </div>
+</div>
+<div class="navrow">
+  <div class="tabs" id="seasonTabs"><button class="seg" data-season="trot">S1 · Road to 30</button><button class="seg" data-season="half">S2 · Road to 13.1</button></div>
+  <div class="tabs"><button class="tab active" data-view="overview">Overview</button><button class="tab" data-view="runs">Run Log</button><button class="tab" data-view="plan">Plan</button></div>
 </div>
 
-<div class="modal" id="modal"><div class="modalCard"><div style="display:flex;justify-content:space-between;align-items:center"><h3 id="modalTitle">Log a run</h3><button class="btn" id="closeBtn">✕</button></div><form id="runForm"><input type="hidden" id="editId"><div class="form"><label>Date<input id="fDate" type="date" required></label><label>Planned workout<select id="fPlan"></select></label><label>Run type<select id="fType"><option>Continuous</option><option>Intervals</option><option>Long Run</option><option>Tempo</option><option>Race</option><option>Other</option></select></label><label>Environment<select id="fEnv"><option>Solo Outdoor</option><option>Treadmill</option><option>Stroller</option><option>Other</option></select></label><label>Distance (mi)<input id="fDistance" type="number" step=".01"></label><label>Time<input id="fTime" placeholder="25:10"></label><label>Avg pace<input id="fPace" placeholder="11:07"></label><label>Avg HR<input id="fHR" type="number"></label><label>Cadence<input id="fCadence" type="number"></label><label>RPE<input id="fRPE" type="number" min="1" max="10"></label><label class="full">Work pace / interval note<input id="fWorkPace"></label><label class="full">Notes<textarea id="fNotes"></textarea></label></div><div style="display:flex;justify-content:flex-end;gap:7px;margin-top:12px"><button type="button" class="btn" id="cancelBtn">Cancel</button><button class="btn primary" type="submit">Save run</button></div></form></div></div>
+<section id="overview" class="view active"></section>
+<section id="runs" class="view"><div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><div><h3 id="logTitle">Run log</h3><div class="small">Completed runs only</div></div><button class="btn primary" id="addRunBtn2">+ Log a run</button></div><div class="filters" id="filters"></div><div class="runlist" id="runList"></div></div></section>
+<section id="plan" class="view"><div class="note" id="planNote"></div><div class="planweeks" id="planWeeks"></div></section>
+</div>
+
+<div class="modal" id="modal"><div class="modalCard"><div style="display:flex;justify-content:space-between;align-items:center"><h3 id="modalTitle">Log a run</h3><button class="btn" id="closeBtn">✕</button></div><form id="runForm"><input type="hidden" id="editId"><div class="form"><label>Date<input id="fDate" type="date" required></label><label>Planned workout<select id="fPlan"></select></label><label>Run type<select id="fType"><option>Continuous</option><option>Run/Walk</option><option>Intervals</option><option>Long Run</option><option>Tempo</option><option>Race</option><option>Other</option></select></label><label>Environment<select id="fEnv"><option>Solo Outdoor</option><option>Treadmill</option><option>Stroller</option><option>Other</option></select></label><label>Distance (mi)<input id="fDistance" type="number" step=".01"></label><label>Time<input id="fTime" placeholder="25:10 or 1:05:30"></label><label>Avg pace<input id="fPace" placeholder="11:07"></label><label>Avg HR<input id="fHR" type="number"></label><label>Cadence<input id="fCadence" type="number"></label><label>RPE<input id="fRPE" type="number" min="1" max="10"></label><label class="full">Work pace / interval note<input id="fWorkPace"></label><label class="full check"><input id="fFuel" type="checkbox"> Practiced fueling on this run (gel, chews, water, electrolytes)</label><label class="full">Notes<textarea id="fNotes"></textarea></label></div><div style="display:flex;justify-content:space-between;gap:7px;margin-top:12px"><button type="button" class="btn" id="deleteBtn" style="visibility:hidden">Delete run</button><div style="display:flex;gap:7px"><button type="button" class="btn" id="cancelBtn">Cancel</button><button class="btn primary" type="submit">Save run</button></div></div></form></div></div>
+<div class="toast" id="toast"></div>
 
 <script>
 (()=>{
 "use strict";
 const KEY="roadTo30Live";
-const GOAL={raceDate:"2026-11-26",goalPaceSec:579};
-const PLAN=[
+const S2_START="2026-11-29";
+
+/* ---------- Season 1: Turkey Trot (unchanged) ---------- */
+const PLAN_TROT=[
 {week:1,range:"Oct 4–10",focus:"Baseline + consistency",runs:[{id:"w1r1",slot:"Run 1",type:"Continuous",name:"1.5 mi continuous",distance:1.5,target:"Comfortable"},{id:"w1r2",slot:"Run 2",type:"Intervals",name:"6 × 1 min faster / 2 min easy",distance:null,target:"Controlled faster running"},{id:"w1r3",slot:"Run 3",type:"Long Run",name:"2.0 mi easy",distance:2,target:"Easy"}]},
 {week:2,range:"Oct 11–17",focus:"Build endurance + speed exposure",runs:[{id:"w2r1",slot:"Run 1",type:"Continuous",name:"1.75 mi continuous",distance:1.75,target:"Controlled effort"},{id:"w2r2",slot:"Run 2",type:"Intervals",name:"6 × 2 min / 2 min easy",distance:null,target:"10:40 treadmill work pace"},{id:"w2r3",slot:"Run 3",type:"Long Run",name:"2.25 mi continuous",distance:2.25,target:"Controlled effort"}]},
 {week:3,range:"Oct 18–24",focus:"Hold pace, extend distance",runs:[{id:"w3r1",slot:"Run 1",type:"Continuous",name:"2.0 mi comfortable",distance:2,target:"Comfortable"},{id:"w3r2",slot:"Run 2",type:"Intervals",name:"4 × 3 min / 2 min easy",distance:null,target:"Quality work; stroller context noted"},{id:"w3r3",slot:"Run 3",type:"Long Run",name:"2.5 mi continuous",distance:2.5,target:"Easy / controlled"}]},
@@ -56,6 +76,28 @@ const PLAN=[
 {week:6,range:"Nov 8–14",focus:"Strengthen race-pace feel",runs:[{id:"w6r1",slot:"Run 1",type:"Continuous",name:"2.5 mi easy",distance:2.5,target:"Easy"},{id:"w6r2",slot:"Run 2",type:"Intervals",name:"4 × 4 min / 2 min easy",distance:null,target:"9:50–10:05 if progress supports it"},{id:"w6r3",slot:"Run 3",type:"Long Run",name:"3.25 mi easy",distance:3.25,target:"Easy"}]},
 {week:7,range:"Nov 15–21",focus:"Confidence week",runs:[{id:"w7r1",slot:"Run 1",type:"Continuous",name:"2.0 mi easy",distance:2,target:"Easy"},{id:"w7r2",slot:"Run 2",type:"Tempo",name:"1.5 mi controlled tempo",distance:null,target:"9:50–10:05 if appropriate"},{id:"w7r3",slot:"Run 3",type:"Long Run",name:"3.1 mi continuous",distance:3.1,target:"Confidence run, not a race"}]},
 {week:8,range:"Race Week",focus:"Freshen up + race",runs:[{id:"w8r1",slot:"Run 1",type:"Continuous",name:"1.5–2 mi easy",distance:1.5,target:"Easy"},{id:"w8r2",slot:"Run 2",type:"Intervals",name:"1 mi easy + 4 × 30 sec strides",distance:null,target:"Brisk, relaxed strides"},{id:"w8r3",slot:"Race",type:"Race",name:"Turkey Trot 5K",distance:3.1,target:"Stretch goal 30:00 • 9:39/mi"}]}];
+
+/* ---------- Season 2: Disney Princess Half, Sun Feb 28 2027 ---------- */
+const R=(id,slot,type,name,distance,target)=>({id,slot,type,name,distance,target});
+const PLAN_HALF=[
+{week:1,range:"Nov 29–Dec 5",focus:"Bridge from the 5K",runs:[R("h1r1","Run 1","Continuous","2.5 mi easy",2.5,"Conversational. Run/walk is fine."),R("h1r2","Run 2","Continuous","2.5 mi easy + 4 strides",2.5,"Strides: 20 sec brisk, relaxed form"),R("h1r3","Long Run","Long Run","3.5 mi long run",3.5,"Easy. First step past the 5K.")]},
+{week:2,range:"Dec 6–12",focus:"Build the base",runs:[R("h2r1","Run 1","Continuous","3 mi easy",3,"Easy"),R("h2r2","Run 2","Continuous","2.5 mi easy",2.5,"Optional: middle mile a little quicker"),R("h2r3","Long Run","Long Run","4 mi long run",4,"Easy")]},
+{week:3,range:"Dec 13–19",focus:"First 5-miler",runs:[R("h3r1","Run 1","Continuous","3 mi easy",3,"Easy"),R("h3r2","Run 2","Continuous","3 mi easy",3,"Easy"),R("h3r3","Long Run","Long Run","5 mi long run",5,"Easy. Walk breaks welcome.")]},
+{week:4,range:"Dec 20–26",focus:"Holiday cutback",cutback:true,runs:[R("h4r1","Run 1","Continuous","2.5 mi easy",2.5,"Easy"),R("h4r2","Run 2","Continuous","2.5 mi easy",2.5,"Easy. Christmas week: skip, don't stack."),R("h4r3","Long Run","Long Run","4 mi long run",4,"Easy")]},
+{week:5,range:"Dec 27–Jan 2",focus:"New-year 10K",runs:[R("h5r1","Run 1","Continuous","3 mi easy",3,"Easy"),R("h5r2","Run 2","Continuous","3 mi easy",3,"Easy"),R("h5r3","Long Run","Long Run","6.2 mi long run",6.2,"Easy. First fuel rehearsal.")]},
+{week:6,range:"Jan 3–9",focus:"Settle into the build",runs:[R("h6r1","Run 1","Continuous","3 mi easy",3,"Easy"),R("h6r2","Run 2","Continuous","3.5 mi easy",3.5,"Optional: 1 mi steady in the middle"),R("h6r3","Long Run","Long Run","7 mi long run",7,"Easy. Fuel around mile 4.")]},
+{week:7,range:"Jan 10–16",focus:"Longest yet",runs:[R("h7r1","Run 1","Continuous","3.5 mi easy",3.5,"Easy"),R("h7r2","Run 2","Continuous","3 mi easy",3,"Easy"),R("h7r3","Long Run","Long Run","8 mi long run",8,"Easy. Practice race-morning breakfast.")]},
+{week:8,range:"Jan 17–23",focus:"Cutback + recover",cutback:true,runs:[R("h8r1","Run 1","Continuous","3 mi easy",3,"Easy"),R("h8r2","Run 2","Continuous","3 mi easy",3,"Easy"),R("h8r3","Long Run","Long Run","6 mi long run",6,"Easy. Let the legs absorb the build.")]},
+{week:9,range:"Jan 24–30",focus:"Double digits",runs:[R("h9r1","Run 1","Continuous","3.5 mi easy",3.5,"Easy"),R("h9r2","Run 2","Continuous","3.5 mi easy",3.5,"Optional: 1.5 mi steady"),R("h9r3","Long Run","Long Run","10 mi long run",10,"Easy. Fuel every ~45 min.")]},
+{week:10,range:"Jan 31–Feb 6",focus:"Peak week",runs:[R("h10r1","Run 1","Continuous","3.5 mi easy",3.5,"Easy"),R("h10r2","Run 2","Continuous","3.5 mi easy",3.5,"Easy"),R("h10r3","Long Run","Long Run","11 mi long run (peak)",11,"Dress rehearsal: race gear, fuel, early start")]},
+{week:11,range:"Feb 7–13",focus:"Step down",runs:[R("h11r1","Run 1","Continuous","3.5 mi easy",3.5,"Easy"),R("h11r2","Run 2","Continuous","3 mi easy",3,"Easy"),R("h11r3","Long Run","Long Run","8 mi long run",8,"Easy")]},
+{week:12,range:"Feb 14–20",focus:"Taper",runs:[R("h12r1","Run 1","Continuous","3 mi easy",3,"Easy"),R("h12r2","Run 2","Continuous","2.5 mi easy + 4 strides",2.5,"Strides: brisk, relaxed"),R("h12r3","Long Run","Long Run","6 mi long run",6,"Easy. Trust the training.")]},
+{week:13,range:"Feb 21–28",focus:"Race week",runs:[R("h13r1","Run 1","Continuous","2.5 mi easy",2.5,"Easy"),R("h13r2","Run 2","Continuous","2 mi easy + 4 strides",2,"Optional 1-mi shakeout in Orlando"),R("h13r3","Race","Race","Disney Princess Half Marathon",13.1,"Sun Feb 28 • 5:00 AM • Finish happy")]}];
+
+const SEASONS={
+ trot:{title:"Road to 30",sub:"Turkey Trot 5K • November 26, 2026",race:"2026-11-26",start:"2026-10-04",plan:PLAN_TROT,logo:"🦃",label:"Season 1"},
+ half:{title:"Road to 13.1",sub:"Disney Princess Half Marathon • Sunday, February 28, 2027 • 5:00 AM",race:"2027-02-28",start:S2_START,plan:PLAN_HALF,logo:"🏰",label:"Season 2"}
+};
 const SEED=[
 {id:"r1",date:"2026-10-05",week:1,type:"Continuous",env:"Treadmill",planId:"w1r1",distance:1.56,time:"19:37",pace:"12:31",hr:169,cadence:161,rpe:null,workPace:"",notes:"Week 1 baseline treadmill run."},
 {id:"r2",date:"2026-10-11",week:2,type:"Continuous",env:"Solo Outdoor",planId:"w2r1",distance:1.77,time:"20:06",pace:"11:21",hr:170,cadence:163,rpe:6,workPace:"",notes:"Controlled outdoor run."},
@@ -63,28 +105,215 @@ const SEED=[
 {id:"r4",date:"2026-10-17",week:2,type:"Long Run",env:"Solo Outdoor",planId:"w2r3",distance:2.26,time:"25:10",pace:"11:07",hr:166,cadence:161,rpe:6,workPace:"",notes:"Strong finish / negative split feel."},
 {id:"r5",date:"2026-10-21",week:3,type:"Intervals",env:"Stroller",planId:"w3r2",distance:2.47,time:"30:05",pace:"12:10",hr:165,cadence:149,rpe:8,workPace:"First 3 reps about 10:13, 10:57, 11:00; last rep included a brief walk",notes:"Stroller interval run; added-resistance context."}
 ];
-const $=id=>document.getElementById(id),flat=()=>PLAN.flatMap(w=>w.runs.map(r=>({...r,week:w.week}))),gp=id=>flat().find(p=>p.id===id);
-function wk(d){if(!d)return 1;return Math.max(1,Math.min(8,Math.floor((new Date(d+"T12:00:00")-new Date("2026-10-04T12:00:00"))/604800000)+1))}
-function normalize(raw){return {goal:GOAL,planWeeks:PLAN,runs:(Array.isArray(raw?.runs)?raw.runs:SEED).map(r=>({...r,week:Number(r.week)||wk(r.date),env:r.env||r.environment||"Other",distance:Number(r.distance)||0,hr:r.hr?Number(r.hr):null,cadence:r.cadence?Number(r.cadence):null,rpe:r.rpe?Number(r.rpe):null}))}}
-function load(){try{return normalize(JSON.parse(localStorage.getItem(KEY)||"null"))}catch(e){return normalize(null)}}let state=load(),filter="All";
+const LEVELS=["Stocking Stuffer","Snow Jogger","Cocoa Cruiser","Sleigh Runner","Tinsel Tempo","Frost Footed","North Star","Crown Chaser","Royal Strider","Castle Crasher"];
+
+/* ---------- helpers ---------- */
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const seasonOf=d=>(d||"")>=S2_START?"half":"trot";
+function blockWeek(d,s){const S=SEASONS[s],n=Math.floor((new Date(d+"T12:00:00")-new Date(S.start+"T12:00:00"))/604800000)+1;return Math.max(1,Math.min(S.plan.length,n))}
+const wk=d=>d?blockWeek(d,seasonOf(d)):1;
+const flat=s=>SEASONS[s].plan.flatMap(w=>w.runs.map(r=>({...r,week:w.week,season:s})));
+const gp=id=>id?[...flat("trot"),...flat("half")].find(p=>p.id===id):null;
+function ps(s){if(!s)return null;const a=String(s).split(":").map(Number);return a.length>=2?a[0]*60+a[1]:null}
+function fp(x){if(!Number.isFinite(x))return"—";return Math.floor(x/60)+":"+String(Math.round(x%60)).padStart(2,"0")}
+function ts(s){if(!s)return null;const a=String(s).split(":").map(Number);return a.length===3?a[0]*3600+a[1]*60+a[2]:a.length===2?a[0]*60+a[1]:a[0]}
+function fd(s){return new Date(s+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"})}
+const daysTo=d=>Math.max(0,Math.ceil((new Date(d+"T05:00:00")-new Date())/86400000));
+const sum=rs=>rs.reduce((a,r)=>a+r.distance,0);
+const pct=(h,g)=>Math.max(0,Math.min(100,g?h/g*100:0));
+
+/* ---------- state ---------- */
+function normalize(raw){
+  const runs=(Array.isArray(raw?.runs)?raw.runs:SEED).map(r=>({...r,week:Number(r.week)||wk(r.date),env:r.env||r.environment||"Other",distance:Number(r.distance)||0,hr:r.hr?Number(r.hr):null,cadence:r.cadence?Number(r.cadence):null,rpe:r.rpe?Number(r.rpe):null,fuel:!!r.fuel}));
+  return {runs,skin:raw?.skin||null,snow:raw?.snow!==false,season:raw?.season||null,seen:Array.isArray(raw?.seen)?raw.seen:null};
+}
+function load(){try{return normalize(JSON.parse(localStorage.getItem(KEY)||"null"))}catch(e){return normalize(null)}}
+let state=load(),filter="All";
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
-function ps(s){if(!s)return null;const a=String(s).split(":").map(Number);return a.length>=2?a[0]*60+a[1]:null}function fp(x){if(!Number.isFinite(x))return"—";return Math.floor(x/60)+":"+String(Math.round(x%60)).padStart(2,"0")}function ts(s){if(!s)return null;const a=String(s).split(":").map(Number);return a.length===3?a[0]*3600+a[1]*60+a[2]:a.length===2?a[0]*60+a[1]:a[0]}function fd(s){return new Date(s+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"})}
-const cont=()=>state.runs.filter(r=>["Continuous","Long Run"].includes(r.type)),tm=()=>state.runs.reduce((a,r)=>a+r.distance,0),lc=()=>Math.max(0,...cont().map(r=>r.distance));
-function render(){save();const m=tm(),l=lc(),paces=cont().map(r=>ps(r.pace)).filter(Number.isFinite),best=paces.length?Math.min(...paces):null;const days=Math.max(0,Math.ceil((new Date(GOAL.raceDate+"T12:00:00")-new Date())/86400000));$("daysLeft").textContent=days;$("heroLongest").textContent=l.toFixed(2)+" mi";$("heroMiles").textContent=m.toFixed(2);$("totalMiles").textContent=m.toFixed(2)+" mi";$("longestRun").textContent=l.toFixed(2)+" mi";$("bestPace").textContent=best?fp(best)+"/mi":"—";$("runCount").textContent=state.runs.length;const clubs=[5,10,15,20,25,31.1,50],next=clubs.find(x=>x>m)||60,prev=[0,...clubs].filter(x=>x<=m).at(-1)||0;$("nextClub").textContent=next+" Mile Club";$("mileProgress").style.width=Math.max(0,Math.min(100,(m-prev)/(next-prev)*100))+"%";$("levelText").textContent="Level "+(Math.floor((state.runs.length*100+m*10)/500)+1)+" • "+Math.round(state.runs.length*100+m*10)+" XP";renderCoach();renderNext();renderTrail();renderBadges();renderRuns();renderPlan();fillPlans()}
-function renderCoach(){const a=state.runs.filter(r=>r.env==="Solo Outdoor"&&["Continuous","Long Run"].includes(r.type)).sort((x,y)=>x.date.localeCompare(y.date));if(a.length<2){$("coachLens").innerHTML="<b>Collecting comparison data.</b>";return}const x=a[0],y=a.at(-1);$("coachLens").innerHTML="<b>Same environment, better output.</b><br>"+fd(x.date)+" → "+fd(y.date)+": <b>+"+(y.distance-x.distance).toFixed(2)+" mi</b>, <b>"+(ps(x.pace)-ps(y.pace))+" sec/mi faster</b>, <b>"+(x.hr-y.hr)+" bpm lower</b> average HR."}
-function renderNext(){const f=flat(),done=new Set(state.runs.map(r=>r.planId).filter(Boolean)),idx=Math.max(-1,...f.map((p,i)=>done.has(p.id)?i:-1)),n=f.slice(idx+1).find(p=>!done.has(p.id))||f.find(p=>!done.has(p.id));$("nextRun").innerHTML=n?"<b>"+n.name+"</b><br>Week "+n.week+" • "+n.target:"<b>Plan complete 🎉</b>"}
-function renderTrail(){const l=lc(),ms=[[1.5,"1.5"],[2,"2.0"],[2.5,"2.5"],[3.1,"3.1"],[99,"🦃"]];$("trail").innerHTML=ms.map((x,i)=>{const d=i<4&&l>=x[0],c=!d&&ms.slice(0,i).every((z,j)=>j>=4||l>=z[0]);return '<div class="trailItem '+(d?"done":c?"current":"")+'"><div class="trailDot">'+(d?"✓":i+1)+'</div><b>'+x[1]+'</b><div>'+(i===4?"Race day":"miles")+'</div></div>'}).join("")}
-function badges(){const m=tm(),l=lc(),best=Math.min(...cont().map(r=>ps(r.pace)).filter(Number.isFinite),9999),envs=new Set(state.runs.map(r=>r.env)),weeks={};state.runs.forEach(r=>(weeks[r.week]??=[]).push(r));return [["🏁","Starting Line","First run logged",state.runs.length>0],["👟","5 Mile Club","5 training miles",m>=5],["🔥","10 Mile Club","10 training miles",m>=10],["✨","15 Mile Club","15 training miles",m>=15],["💪🏽","Two-Mile Strong","2.0 continuous",l>=2],["🛣️","2.5 & Thriving","2.5 continuous",l>=2.5],["🏆","5K Ready","3.1 continuous",l>=3.1],["📆","Three-Run Week","3 runs in one week",Object.values(weeks).some(a=>a.length>=3)],["🛒","Stroller Strong","Stroller run logged",envs.has("Stroller")],["🧭","Adaptable Athlete","Treadmill + stroller + outdoor",["Treadmill","Stroller","Solo Outdoor"].every(x=>envs.has(x))],["📏","Treadmill Truth Teller","Logged belt pace",state.runs.some(r=>r.env==="Treadmill"&&r.workPace)],["📈","Finish With Something Left","Strong finish / negative split",state.runs.some(r=>/strong finish|negative/i.test(r.notes||""))],["🔟","Ten-Minute Tease","Touched 10:xx in speed work",state.runs.some(r=>/10:\d\d/.test(r.workPace||""))],["⚡","Sub-11","Continuous avg under 11:00",best<660],["🚀","Sub-10","Continuous avg under 10:00",best<600],["🦃","Thirty-Minute Turkey","5K in 30:00",state.runs.some(r=>r.type==="Race"&&r.distance>=3.1&&ts(r.time)<=1800)]]}
-function renderBadges(){const b=badges(),u=b.filter(x=>x[3]).length;$("badgeCount").textContent=u+"/"+b.length+" unlocked";$("badges").innerHTML=b.map(x=>'<div class="badge '+(x[3]?"":"locked")+'"><div class="bi">'+(x[3]?x[0]:"❔")+'</div><div class="bn">'+(x[3]?x[1]:"Mystery Badge")+'</div><div class="bd">'+(x[3]?x[2]:"Keep training smart to reveal it.")+'</div></div>').join("")}
-function renderRuns(){const fs=["All","Solo Outdoor","Treadmill","Stroller","Other"];$("filters").innerHTML=fs.map(f=>'<button class="filter '+(filter===f?"active":"")+'" data-f="'+f+'">'+f+'</button>').join("");$("filters").querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{filter=b.dataset.f;renderRuns()});const rows=[...state.runs].sort((a,b)=>b.date.localeCompare(a.date)).filter(r=>filter==="All"||r.env===filter);$("runList").innerHTML='<div class="runrow head"><div>Date</div><div>Workout</div><div>Distance</div><div>Pace</div><div>HR</div><div>RPE</div><div></div></div>'+rows.map(r=>{const p=gp(r.planId);return '<div class="runrow"><div><b>'+fd(r.date)+'</b><div class="meta">Wk '+r.week+'</div></div><div><div class="runname">'+r.type+(p?" • "+p.name:"")+'</div><div class="meta">'+(r.workPace||r.notes||"")+'</div><span class="env">'+r.env+'</span></div><div><b>'+r.distance.toFixed(2)+'</b><div class="meta">mi</div></div><div><b>'+(r.pace||"—")+'</b></div><div><b>'+(r.hr||"—")+'</b></div><div><b>'+(r.rpe||"—")+'</b></div><div><button class="btn edit" data-id="'+r.id+'">Edit</button></div></div>'}).join("");$("runList").querySelectorAll(".edit").forEach(b=>b.onclick=()=>editRun(b.dataset.id))}
-function renderPlan(){const by=Object.fromEntries(state.runs.filter(r=>r.planId).map(r=>[r.planId,r]));$("planWeeks").innerHTML=PLAN.map(w=>'<div class="week"><div class="weektop"><div><b>Week '+w.week+' • '+w.focus+'</b><div class="small">'+w.range+'</div></div><div class="small">'+w.runs.filter(p=>by[p.id]).length+'/3 logged</div></div><div class="weekruns">'+w.runs.map(p=>{const a=by[p.id];return '<div class="planrun '+(a?"done":"")+'"><div class="slot">'+p.slot+(a?" • ✓ logged":"")+'</div><div class="pn">'+p.name+'</div><div class="target">'+p.target+'</div>'+(a?'<div class="actual"><b>Actual:</b> '+a.distance.toFixed(2)+' mi • '+(a.pace||"—")+' pace • HR '+(a.hr||"—")+' • '+a.env+(a.rpe?" • RPE "+a.rpe:"")+'</div>':'')+'</div>'}).join("")+'</div></div>').join("")}
-function fillPlans(){const cur=$("fPlan").value;$("fPlan").innerHTML='<option value="">Unmatched / custom</option>'+flat().map(p=>'<option value="'+p.id+'">Week '+p.week+' • '+p.slot+' • '+p.name+'</option>').join("");$("fPlan").value=cur}
+const runsOf=s=>state.runs.filter(r=>seasonOf(r.date)===s);
+const trotRaceDone=()=>state.runs.some(r=>r.type==="Race"&&seasonOf(r.date)==="trot");
+function curSeason(){if(state.season)return state.season;return (today()>"2026-11-26"||trotRaceDone())?"half":"trot"}
+function curSkin(){return state.skin||(today()<"2027-01-07"?"holiday":"castle")}
+
+/* ---------- badges ---------- */
+function s1Badges(){
+  const rs=runsOf("trot"),cont=rs.filter(r=>["Continuous","Long Run"].includes(r.type)),m=sum(rs),l=Math.max(0,...cont.map(r=>r.distance)),best=Math.min(9999,...cont.map(r=>ps(r.pace)).filter(Number.isFinite)),envs=new Set(rs.map(r=>r.env)),weeks={};
+  rs.forEach(r=>(weeks[r.week]??=[]).push(r));
+  return [["🏁","Starting Line","First run logged",rs.length>0],["👟","5 Mile Club","5 training miles",m>=5],["🔥","10 Mile Club","10 training miles",m>=10],["✨","15 Mile Club","15 training miles",m>=15],["💪🏽","Two-Mile Strong","2.0 continuous",l>=2],["🛣️","2.5 & Thriving","2.5 continuous",l>=2.5],["🏆","5K Ready","3.1 continuous",l>=3.1],["📆","Three-Run Week","3 runs in one week",Object.values(weeks).some(a=>a.length>=3)],["🛒","Stroller Strong","Stroller run logged",envs.has("Stroller")],["🧭","Adaptable Athlete","Treadmill + stroller + outdoor",["Treadmill","Stroller","Solo Outdoor"].every(x=>envs.has(x))],["📏","Treadmill Truth Teller","Logged belt pace",rs.some(r=>r.env==="Treadmill"&&r.workPace)],["📈","Finish With Something Left","Strong finish / negative split",rs.some(r=>/strong finish|negative/i.test(r.notes||""))],["🔟","Ten-Minute Tease","Touched 10:xx in speed work",rs.some(r=>/10:\d\d/.test(r.workPace||""))],["⚡","Sub-11","Continuous avg under 11:00",best<660],["🚀","Sub-10","Continuous avg under 10:00",best<600],["🦃","Thirty-Minute Turkey","5K in 30:00",rs.some(r=>r.type==="Race"&&r.distance>=3.1&&ts(r.time)<=1800)]]
+   .map(([icon,name,desc,done])=>({id:"s1:"+name,icon,name,desc,done}));
+}
+function s2Data(){
+  const rs=runsOf("half"),miles=sum(rs),longest=Math.max(0,...rs.filter(r=>r.type!=="Intervals").map(r=>r.distance));
+  const byWeek={};rs.forEach(r=>(byWeek[blockWeek(r.date,"half")]??=[]).push(r));
+  const done=new Set(rs.map(r=>r.planId).filter(Boolean));
+  const fullWeeks=PLAN_HALF.filter(w=>w.runs.every(p=>done.has(p.id))).length;
+  let best=0,run=0;for(let w=1;w<=PLAN_HALF.length;w++){if((byWeek[w]||[]).length>=2){run++;best=Math.max(best,run)}else run=0}
+  const fuel=rs.filter(r=>r.distance>=6&&(r.fuel||/fuel|gel|chew|electrolyte|\bgu\b/i.test(r.notes||""))).length;
+  const holiday=rs.filter(r=>r.date>="2026-12-20"&&r.date<="2027-01-01").length;
+  const dec=rs.filter(r=>r.date.startsWith("2026-12")).length;
+  const race=rs.some(r=>r.type==="Race"&&r.distance>=13.1);
+  return {rs,miles,longest,byWeek,done,fullWeeks,streak:best,fuel,holiday,dec,race};
+}
+function s2Challenges(D){
+  return [
+   ["🎄","Opening Night","Log your first Season 2 run",D.rs.length,1,""],
+   ["🛷","Sleigh Miles","25 miles this season",D.miles,25," mi"],
+   ["⭐","Fifty & Festive","50 miles this season",D.miles,50," mi"],
+   ["💯","Century Club","100 miles this season",D.miles,100," mi"],
+   ["📏","10K Long Run","A long run of 6.2 mi",D.longest,6.2," mi"],
+   ["🔟","Double Digits","A 10-mile run",D.longest,10," mi"],
+   ["👑","Peak Performer","Hit the 11-mile peak",D.longest,11," mi"],
+   ["✅","Three for Three","Finish every planned run in 4 weeks",D.fullWeeks,4," wks"],
+   ["🔗","Unbroken Chain","6 weeks in a row with 2+ runs",D.streak,6," wks"],
+   ["🎆","Holiday Hustle","6 runs between Dec 20 and Jan 1",D.holiday,6," runs"],
+   ["🧃","Fuel Rehearsal","Practice fueling on 3 runs of 6+ mi",D.fuel,3," runs"],
+   ["🏰","Castle Gates","Finish 13.1 on Feb 28",D.race?1:0,1,""]
+  ].map(([icon,name,desc,have,goal,unit])=>({id:"c:"+name,icon,name,desc,have,goal,unit,done:have>=goal}));
+}
+function s2Secrets(D){
+  const rs=D.rs,on=d=>rs.some(r=>r.date===d),note=re=>rs.some(r=>re.test((r.notes||"")+" "+(r.workPace||"")));
+  const all=[...state.runs].sort((a,b)=>a.date.localeCompare(b.date));
+  const comeback=all.some((r,i)=>i>0&&seasonOf(r.date)==="half"&&(new Date(r.date)-new Date(all[i-1].date))/86400000>=7);
+  return [
+   ["🎟️","Season Pass","Ran the Turkey Trot and came back for Season 2.",trotRaceDone()&&rs.length>0],
+   ["🎅","Christmas Morning Miles","Ran on Christmas Day.",on("2026-12-25")],
+   ["🎁","Twelve Runs of Christmas","12 runs in December.",D.dec>=12],
+   ["🥂","First Miles of 2027","Ran on New Year's Day.",on("2027-01-01")],
+   ["🧊","Cold Snap","Logged a run in the cold. Houston winter counts.",note(/cold|freez|frost|chilly|brr|icy/i)],
+   ["🛷","Sleigh Pusher","4+ miles pushing the stroller.",rs.some(r=>r.env==="Stroller"&&r.distance>=4)],
+   ["🥧","Pie Run","Exactly 3.14 miles. Leftover pie energy.",rs.some(r=>r.distance>=3.14&&r.distance<3.15)],
+   ["🔁","Comeback Kid","Came back after 7+ days off. That counts.",comeback],
+   ["📈","Saved the Best for Last","Negative split or strong finish.",note(/negative split|strong finish|finished strong/i)],
+   ["♒","Birthday Miles","Ran on your birthday.",on("2027-02-08")],
+   ["💖","Love the Run","Ran on Valentine's Day.",on("2027-02-14")]
+  ].map(([icon,name,desc,done])=>({id:"x:"+name,icon,name,desc,done}));
+}
+
+/* ---------- unlock toasts ---------- */
+let toastQ=[],toastOn=false;
+function showToast(html){toastQ.push(html);if(!toastOn)nextToast()}
+function nextToast(){const t=$("toast"),h=toastQ.shift();if(!h){toastOn=false;return}toastOn=true;t.innerHTML=h;t.classList.add("show");setTimeout(()=>{t.classList.remove("show");setTimeout(nextToast,400)},3400)}
+function checkUnlocks(){
+  const D=s2Data(),list=[...s1Badges(),...s2Challenges(D),...s2Secrets(D)],got=list.filter(b=>b.done);
+  if(!state.seen){state.seen=got.map(b=>b.id);return}
+  const fresh=got.filter(b=>!state.seen.includes(b.id));
+  fresh.forEach(b=>{state.seen.push(b.id);showToast(b.id.startsWith("x:")?"🎁 You unwrapped a secret badge: <b>"+b.icon+" "+esc(b.name)+"</b>":"Badge earned: <b>"+b.icon+" "+esc(b.name)+"</b>")});
+}
+
+/* ---------- overview: season 1 ---------- */
+function overviewTrot(){
+  const rs=runsOf("trot"),cont=rs.filter(r=>["Continuous","Long Run"].includes(r.type)),m=sum(rs),l=Math.max(0,...cont.map(r=>r.distance)),paces=cont.map(r=>ps(r.pace)).filter(Number.isFinite),best=paces.length?Math.min(...paces):null;
+  const race=rs.find(r=>r.type==="Race");
+  const clubs=[5,10,15,20,25,31.1,50],next=clubs.find(x=>x>m)||60,prev=[0,...clubs].filter(x=>x<=m).at(-1)||0;
+  const b=s1Badges(),u=b.filter(x=>x.done).length;
+  const a=rs.filter(r=>r.env==="Solo Outdoor"&&["Continuous","Long Run"].includes(r.type)).sort((x,y)=>x.date.localeCompare(y.date));
+  const coach=a.length<2?"<b>Collecting comparison data.</b>":"<b>Same environment, better output.</b><br>"+fd(a[0].date)+" → "+fd(a.at(-1).date)+": <b>+"+(a.at(-1).distance-a[0].distance).toFixed(2)+" mi</b>, <b>"+(ps(a[0].pace)-ps(a.at(-1).pace))+" sec/mi faster</b>"+(a[0].hr&&a.at(-1).hr?", <b>"+(a[0].hr-a.at(-1).hr)+" bpm lower</b> average HR.":".");
+  const ms=[[1.5,"1.5"],[2,"2.0"],[2.5,"2.5"],[3.1,"3.1"]];
+  return hero("YOUR TURKEY TROT MISSION","3.1 miles.<br>30:00.",race?"Race logged: <b>"+esc(race.time||"—")+"</b> on "+fd(race.date)+". Season 2 is open.":"Build the engine first, then sharpen the pace. Smart training counts.",
+     [[daysTo("2026-11-26"),"days left"],["9:39","goal pace"],[l.toFixed(2)+" mi","longest continuous"]],
+     next+" Mile Club",m,(m-prev)/(next-prev)*100)
+   +stats([["Training miles",m.toFixed(2)+" mi"],["Longest continuous",l.toFixed(2)+" mi"],["Best continuous pace",best?fp(best)+"/mi":"—"],["Runs logged",rs.length]])
+   +'<div class="two"><div class="card"><h3>Coach’s lens</h3><div class="callout">'+coach+'</div></div><div class="card"><h3>Next key run</h3><div class="callout">'+nextRun("trot")+'</div></div></div>'
+   +'<div class="two"><div class="card"><h3>Distance trail</h3>'+trail(l,ms,"🦃","Race day",!!race)+'</div><div class="card"><div class="sectionHead"><h3>Badge case</h3><div class="small">'+u+"/"+b.length+' unlocked</div></div><div class="badges" style="margin-top:8px">'+b.map(x=>'<div class="badge '+(x.done?"":"locked")+'"><div class="bi">'+(x.done?x.icon:"❔")+'</div><div class="bn">'+(x.done?x.name:"Mystery Badge")+'</div><div class="bd">'+(x.done?x.desc:"Keep training smart to reveal it.")+'</div></div>').join("")+'</div></div></div>';
+}
+
+/* ---------- overview: season 2 ---------- */
+function overviewHalf(){
+  const D=s2Data(),cw=today()>=S2_START?blockWeek(today(),"half"):0;
+  const clubs=[25,50,75,100,125,150,175],next=clubs.find(x=>x>D.miles)||200,prev=[0,...clubs].filter(x=>x<=D.miles).at(-1)||0;
+  const ch=s2Challenges(D),sc=s2Secrets(D),cu=ch.filter(c=>c.done).length,su=sc.filter(c=>c.done).length;
+  const due=flat("half").filter(p=>p.week<cw),dueDone=due.filter(p=>D.done.has(p.id)).length;
+  const nextLR=flat("half").find(p=>p.slot!=="Run 1"&&p.slot!=="Run 2"&&!D.done.has(p.id));
+  let coach;
+  if(!D.rs.length)coach="<b>Week 1 starts Sunday, Nov 29.</b><br>Three runs a week. Two stay easy; the long run is the one number that grows, from 3.5 to an 11-mile peak on Feb 6. Run/walk counts. Miss a run? Skip it, don't stack it.";
+  else{coach="<b>Longest so far: "+D.longest.toFixed(1)+" mi.</b>"+(nextLR?" Next long run: <b>"+nextLR.distance+" mi</b> (week "+nextLR.week+").":"")+"<br>";
+    coach+=due.length?"Planned runs done in past weeks: <b>"+dueDone+"/"+due.length+"</b>. ":"";
+    coach+=D.longest>=5&&D.fuel===0?"Start fuel practice on the 6.2 and tick the fuel box when you log it.":D.longest>=11?"Peak is done. Now it's about arriving rested.":"Keep the easy runs easy so the long run has legs.";}
+  const ms=[[4,"4"],[6.2,"6.2"],[8,"8"],[10,"10"],[11,"11"]];
+  const chalHTML=ch.map(c=>'<div class="ch '+(c.done?"done":"todo")+'"><div class="bi">'+c.icon+'</div><div><div class="bn">'+c.name+(c.done?" ✓":"")+'</div><div class="bd">'+c.desc+'</div><div class="progress"><span style="width:'+pct(c.have,c.goal)+'%"></span></div><div class="pct">'+(c.done?"Earned":(Math.round(c.have*10)/10)+" / "+c.goal+c.unit)+'</div></div></div>').join("");
+  const secHTML=sc.map(s=>s.done?'<div class="secret found"><div class="bi">'+s.icon+'</div><div class="bn">'+s.name+'</div><div class="bd">'+s.desc+'</div></div>':'<div class="secret wrapped"><div class="bi">🎁</div><div class="bn">Still wrapped</div></div>').join("");
+  return hero("SEASON 2 • YOUR CASTLE MISSION","13.1 miles.<br>Finish happy.",D.race?"You did it. Castle Crasher status confirmed.":"No pace goals. Build the long run, keep everything else easy, and enjoy the party.",
+     [[daysTo("2027-02-28"),"days to race"],[cw?"Week "+cw+" of 13":"Starts Nov 29","training block"],[D.longest.toFixed(1)+" mi","longest run"]],
+     next+" Mile Club",D.miles,(D.miles-prev)/(next-prev)*100)
+   +stats([["Season miles",D.miles.toFixed(1)+" mi"],["Longest run",D.longest.toFixed(1)+" mi"],["Best week streak",D.streak+" wks"],["Runs logged",D.rs.length]])
+   +'<div class="two"><div class="card"><h3>Coach’s lens</h3><div class="callout">'+coach+'</div></div><div class="card"><h3>Next key run</h3><div class="callout">'+nextRun("half")+'</div></div></div>'
+   +'<div class="card" style="margin-bottom:13px"><h3>Long-run trail</h3>'+trail(D.longest,ms,"🏰","Feb 28",D.race)+'</div>'
+   +'<div class="card" style="margin-bottom:13px"><div class="sectionHead"><h3>Challenges</h3><div class="small">'+cu+"/"+ch.length+' earned</div></div><div class="small" style="margin-bottom:9px">Visible goals to work toward. Progress updates every time you log.</div><div class="chal">'+chalHTML+'</div></div>'
+   +'<div class="card"><div class="sectionHead"><h3>Secret stash</h3><div class="small">'+su+"/"+sc.length+' unwrapped</div></div><div class="small" style="margin-bottom:9px">No hints. Just run your season and see what opens.</div><div class="secrets">'+secHTML+'</div></div>';
+}
+
+/* ---------- shared pieces ---------- */
+function hero(kicker,title,line,pills,club,miles,p){
+  const xp=Math.round(state.runs.length*100+sum(state.runs)*10),lvl=Math.floor(xp/500)+1,name=LEVELS[Math.min(LEVELS.length-1,lvl-1)];
+  return '<div class="hero"><div class="heroMain"><div class="sub">'+kicker+'</div><h2>'+title+'</h2><div class="small">'+line+'</div><div class="pills">'+pills.map(x=>'<div class="pill"><strong>'+x[0]+'</strong><span>'+x[1]+'</span></div>').join("")+'</div></div>'
+   +'<div class="card"><div class="small">MILEAGE QUEST</div><h3>Next club: '+club+'</h3><div class="big">'+miles.toFixed(1)+' mi</div><div class="progress"><span style="width:'+pct(p,100)+'%"></span></div><div class="small" style="margin-top:7px">Level '+lvl+' • '+name+' • '+xp+' XP (all seasons)</div></div></div>';
+}
+const stats=a=>'<div class="grid4">'+a.map(x=>'<div class="stat"><div class="label">'+x[0]+'</div><div class="value">'+x[1]+'</div></div>').join("")+'</div>';
+function trail(l,ms,flag,flagLabel,flagDone){
+  const items=[...ms.map(x=>[x[0],x[1],"miles"]),[1e9,flag,flagLabel]];
+  let cur=false;
+  return '<div class="trail" style="grid-template-columns:repeat('+items.length+',1fr)">'+items.map((x,i)=>{const d=i<ms.length?l>=x[0]:flagDone,c=!d&&!cur;if(c)cur=true;return '<div class="trailItem '+(d?"done":c?"current":"")+'"><div class="trailDot">'+(d?"✓":i===ms.length?flag:i+1)+'</div><b>'+(i===ms.length?"Race":x[1])+'</b><div>'+x[2]+'</div></div>'}).join("")+'</div>';
+}
+function nextRun(s){const f=flat(s),done=new Set(state.runs.map(r=>r.planId).filter(Boolean)),idx=Math.max(-1,...f.map((p,i)=>done.has(p.id)?i:-1)),n=f.slice(idx+1).find(p=>!done.has(p.id))||f.find(p=>!done.has(p.id));const w=n&&SEASONS[s].plan.find(x=>x.week===n.week);return n?"<b>"+n.name+"</b><br>Week "+n.week+" ("+w.range+") • "+esc(n.target):"<b>Plan complete 🎉</b>"}
+
+/* ---------- run log + plan ---------- */
+function renderRuns(s){
+  $("logTitle").textContent=SEASONS[s].label+" run log";
+  const fs=["All","Solo Outdoor","Treadmill","Stroller","Other"];
+  $("filters").innerHTML=fs.map(f=>'<button class="filter '+(filter===f?"active":"")+'" data-f="'+f+'">'+f+'</button>').join("");
+  $("filters").querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{filter=b.dataset.f;renderRuns(s)});
+  const rows=runsOf(s).sort((a,b)=>b.date.localeCompare(a.date)).filter(r=>filter==="All"||r.env===filter);
+  $("runList").innerHTML='<div class="runrow head"><div>Date</div><div>Workout</div><div>Distance</div><div>Pace</div><div>HR</div><div>RPE</div><div></div></div>'+(rows.length?rows.map(r=>{const p=gp(r.planId);return '<div class="runrow"><div><b>'+fd(r.date)+'</b><div class="meta">Wk '+blockWeek(r.date,s)+'</div></div><div><div class="runname">'+esc(r.type)+(p?" • "+esc(p.name):"")+'</div><div class="meta">'+esc(r.workPace||r.notes||"")+'</div><span class="env">'+esc(r.env)+'</span>'+(r.fuel?'<span class="env fuel">🧃 fueled</span>':"")+'</div><div><b>'+r.distance.toFixed(2)+'</b><div class="meta">mi</div></div><div><b>'+esc(r.pace||"—")+'</b></div><div><b>'+(r.hr||"—")+'</b></div><div><b>'+(r.rpe||"—")+'</b></div><div><button class="btn edit" data-id="'+esc(r.id)+'">Edit</button></div></div>'}).join(""):'<div class="small" style="padding:14px">No runs logged in this season yet.</div>');
+  $("runList").querySelectorAll(".edit").forEach(b=>b.onclick=()=>editRun(b.dataset.id));
+}
+function renderPlan(s){
+  $("planNote").innerHTML=s==="trot"
+   ?"<b>Current adjustment:</b> Week 4 repeats the 4 × 3-minute interval workout. Target <b>10:35–10:45/mi</b> on the work reps with 2-minute easy recoveries. The Oct. 21 stroller run stays in the log as added-resistance context, not regression."
+   :"<b>How this block works:</b> 13 weeks, three runs a week, long run on the weekend. Lifting, Pilates and cycling stay as cross-training; ease off them on heavy long-run weekends.<ul><li><b>No pace goals.</b> Easy means you could talk the whole time. Run/walk is a real strategy, not a fallback.</li><li><b>Cutback weeks 4 and 8</b> pull mileage down on purpose. Week 4 lands on Christmas.</li><li><b>Peak is 11 mi on Feb 6,</b> about three weeks out. Then step down and taper.</li><li><b>Fuel on anything 6+ mi</b> and tick the fuel box, so race morning has no surprises.</li><li><b>Something hurts? Walk.</b> Missed a run? Skip it. Never double up.</li></ul>";
+  const by=Object.fromEntries(state.runs.filter(r=>r.planId).map(r=>[r.planId,r])),cw=today()>=SEASONS[s].start&&today()<=SEASONS[s].race?blockWeek(today(),s):0;
+  $("planWeeks").innerHTML=SEASONS[s].plan.map(w=>{const tot=w.runs.reduce((a,p)=>a+(p.distance||0),0);return '<div class="week '+(w.week===cw?"now":"")+'"><div class="weektop"><div><b>Week '+w.week+' • '+w.focus+'</b>'+(w.week===cw?'<span class="tag">This week</span>':"")+(w.cutback?'<span class="tag">Cutback</span>':"")+'<div class="small">'+w.range+(s==="half"?" • "+tot.toFixed(1)+" mi planned":"")+'</div></div><div class="small">'+w.runs.filter(p=>by[p.id]).length+'/3 logged</div></div><div class="weekruns">'+w.runs.map(p=>{const a=by[p.id];return '<div class="planrun '+(a?"done":"")+'"><div class="slot">'+p.slot+(a?" • ✓ logged":"")+'</div><div class="pn">'+p.name+'</div><div class="target">'+esc(p.target)+'</div>'+(a?'<div class="actual"><b>Actual:</b> '+a.distance.toFixed(2)+' mi • '+esc(a.pace||"—")+' pace • HR '+(a.hr||"—")+' • '+esc(a.env)+(a.rpe?" • RPE "+a.rpe:"")+(a.fuel?" • 🧃":"")+'</div>':'')+'</div>'}).join("")+'</div></div>'}).join("");
+}
+function fillPlans(){
+  const cur=$("fPlan").value,grp=s=>'<optgroup label="'+SEASONS[s].label+' · '+SEASONS[s].title+'">'+flat(s).map(p=>'<option value="'+p.id+'">Week '+p.week+' • '+p.slot+' • '+esc(p.name)+'</option>').join("")+'</optgroup>';
+  $("fPlan").innerHTML='<option value="">Unmatched / custom</option>'+(curSeason()==="half"?grp("half")+grp("trot"):grp("trot")+grp("half"));$("fPlan").value=cur;
+}
+
+/* ---------- skin ---------- */
+function applySkin(){
+  const sk=curSkin();document.body.dataset.skin=sk;$("skinSel").value=sk;
+  $("snowBtn").style.display=sk==="holiday"?"":"none";$("snowBtn").style.opacity=state.snow?1:.45;
+  const sn=$("snow");sn.classList.toggle("on",sk==="holiday"&&state.snow);
+  if(sk==="holiday"&&state.snow&&!sn.childElementCount){let h="";for(let i=0;i<28;i++){h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;font-size:'+(8+Math.random()*10).toFixed(0)+'px;animation-duration:'+(9+Math.random()*12).toFixed(1)+'s;animation-delay:-'+(Math.random()*20).toFixed(1)+'s">❄</i>'}sn.innerHTML=h}
+}
+
+/* ---------- render ---------- */
+function render(){
+  const s=curSeason();
+  checkUnlocks();save();applySkin();
+  $("appTitle").textContent=SEASONS[s].title;$("appSub").textContent=SEASONS[s].sub;$("logo").textContent=SEASONS[s].logo;document.title=SEASONS[s].title;
+  document.querySelectorAll(".seg").forEach(b=>b.classList.toggle("active",b.dataset.season===s));
+  $("overview").innerHTML=s==="half"?overviewHalf():overviewTrot();
+  renderRuns(s);renderPlan(s);fillPlans();
+}
 function switchView(id){document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===id));document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t.dataset.view===id))}
-function openModal(){reset();$("modal").classList.add("open")}function closeModal(){$("modal").classList.remove("open")}function reset(){$("runForm").reset();$("editId").value="";$("fDate").value=new Date().toISOString().slice(0,10);$("fEnv").value="Solo Outdoor";$("modalTitle").textContent="Log a run"}
-function editRun(id){const r=state.runs.find(x=>x.id===id);if(!r)return;reset();$("editId").value=r.id;$("fDate").value=r.date;$("fPlan").value=r.planId||"";$("fType").value=r.type;$("fEnv").value=r.env;$("fDistance").value=r.distance;$("fTime").value=r.time||"";$("fPace").value=r.pace||"";$("fHR").value=r.hr||"";$("fCadence").value=r.cadence||"";$("fRPE").value=r.rpe||"";$("fWorkPace").value=r.workPace||"";$("fNotes").value=r.notes||"";$("modalTitle").textContent="Edit run";$("modal").classList.add("open")}
-document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>switchView(b.dataset.view));$("addRunBtn").onclick=openModal;$("addRunBtn2").onclick=openModal;$("closeBtn").onclick=closeModal;$("cancelBtn").onclick=closeModal;$("fPlan").onchange=()=>{const p=gp($("fPlan").value);if(p)$("fType").value=p.type};
-$("runForm").onsubmit=e=>{e.preventDefault();const id=$("editId").value||"r"+Date.now(),distance=Number($("fDistance").value)||0,time=$("fTime").value.trim();let pace=$("fPace").value.trim();if(!pace&&distance&&time)pace=fp(ts(time)/distance);const d=$("fDate").value,obj={id,date:d,week:wk(d),type:$("fType").value,env:$("fEnv").value,planId:$("fPlan").value||null,distance,time,pace,hr:Number($("fHR").value)||null,cadence:Number($("fCadence").value)||null,rpe:Number($("fRPE").value)||null,workPace:$("fWorkPace").value.trim(),notes:$("fNotes").value.trim()},ix=state.runs.findIndex(r=>r.id===id);if(ix>=0)state.runs[ix]=obj;else state.runs.push(obj);closeModal();render()};
-$("backupBtn").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:"application/json"}));a.download="road-to-30-backup.json";a.click()};$("restoreBtn").onclick=()=>$("restoreFile").click();$("restoreFile").onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{state=normalize(JSON.parse(rd.result));render();alert("Backup restored.")}catch(err){alert("Could not restore that backup.")}};rd.readAsText(f)};
+function openModal(){reset();$("modal").classList.add("open")}
+function closeModal(){$("modal").classList.remove("open")}
+function reset(){$("runForm").reset();$("editId").value="";$("fDate").value=today();$("fEnv").value="Solo Outdoor";$("modalTitle").textContent="Log a run";$("deleteBtn").style.visibility="hidden"}
+function editRun(id){const r=state.runs.find(x=>x.id===id);if(!r)return;reset();$("editId").value=r.id;$("fDate").value=r.date;$("fPlan").value=r.planId||"";$("fType").value=r.type;$("fEnv").value=r.env;$("fDistance").value=r.distance;$("fTime").value=r.time||"";$("fPace").value=r.pace||"";$("fHR").value=r.hr||"";$("fCadence").value=r.cadence||"";$("fRPE").value=r.rpe||"";$("fWorkPace").value=r.workPace||"";$("fNotes").value=r.notes||"";$("fFuel").checked=!!r.fuel;$("modalTitle").textContent="Edit run";$("deleteBtn").style.visibility="visible";$("modal").classList.add("open")}
+
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>switchView(b.dataset.view));
+document.querySelectorAll(".seg").forEach(b=>b.onclick=()=>{state.season=b.dataset.season;filter="All";render()});
+$("skinSel").onchange=e=>{state.skin=e.target.value;render()};
+$("snowBtn").onclick=()=>{state.snow=!state.snow;save();applySkin()};
+$("addRunBtn").onclick=openModal;$("addRunBtn2").onclick=openModal;$("closeBtn").onclick=closeModal;$("cancelBtn").onclick=closeModal;
+$("fPlan").onchange=()=>{const p=gp($("fPlan").value);if(p){$("fType").value=p.type;if(p.distance&&!$("fDistance").value)$("fDistance").value=p.distance}};
+$("deleteBtn").onclick=()=>{const id=$("editId").value;if(!id)return;if(confirm("Delete this run?")){state.runs=state.runs.filter(r=>r.id!==id);closeModal();render()}};
+$("runForm").onsubmit=e=>{e.preventDefault();const id=$("editId").value||"r"+Date.now(),distance=Number($("fDistance").value)||0,time=$("fTime").value.trim();let pace=$("fPace").value.trim();if(!pace&&distance&&time)pace=fp(ts(time)/distance);const d=$("fDate").value,obj={id,date:d,week:wk(d),type:$("fType").value,env:$("fEnv").value,planId:$("fPlan").value||null,distance,time,pace,hr:Number($("fHR").value)||null,cadence:Number($("fCadence").value)||null,rpe:Number($("fRPE").value)||null,workPace:$("fWorkPace").value.trim(),fuel:$("fFuel").checked,notes:$("fNotes").value.trim()},ix=state.runs.findIndex(r=>r.id===id);if(ix>=0)state.runs[ix]=obj;else state.runs.push(obj);closeModal();render()};
+$("backupBtn").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:"application/json"}));a.download="road-to-30-backup.json";a.click()};
+$("restoreBtn").onclick=()=>$("restoreFile").click();
+$("restoreFile").onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{state=normalize(JSON.parse(rd.result));render();alert("Backup restored.")}catch(err){alert("Could not restore that backup.")}};rd.readAsText(f)};
 render();
 })();
 </script>
